@@ -1,0 +1,46 @@
+Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+
+Example 1:
+Input: n = 3
+Output: [[1,2,3],[8,9,4],[7,6,5]]
+
+Example 2:
+Input: n = 1
+Output: [[1]]
+ 
+Constraints:
+1 <= n <= 20
+
+
+
+
+
+class Solution {
+  public int[][] generateMatrix(int n) {
+    int x = 0, y = -1, cnt = 1;
+    int xMoves = n-1, yMoves = n;
+    var mat = new int[n][n];
+
+    for (var dir = 0; cnt <= n*n; dir = (dir + 1) % 4) {
+      if (dir == 0) {
+        for (var i=0; i < yMoves; i++)
+          mat[x][++y] = cnt++;
+
+      } else if (dir == 1) {
+        for (var i=0; i < xMoves; i++)
+          mat[++x][y] = cnt++;
+
+      } else if (dir == 2) {
+        for (var i=0; i < yMoves; i++)
+          mat[x][--y] = cnt++;
+          
+      } else if (dir == 3) {
+        for (var i=0; i < xMoves; i++)
+          mat[--x][y] = cnt++;
+      }
+      if (dir % 2 == 0) yMoves--;
+      else xMoves--;
+    }
+    return mat;
+  }
+}
