@@ -1,0 +1,40 @@
+// Define a class named Solution.
+class Solution {
+    // Define a method named candy.
+    public int candy(int[] ratings) {
+        // Check if the ratings array is empty; if so, return 0 candies.
+        if (ratings.length == 0)
+            return 0;
+        
+        int n = ratings.length; // Get the number of children.
+        int[] candies = new int[n]; // Create an array to store the number of candies for each child.
+
+        // Initialize each child with 1 candy (as a baseline).
+        for (int i = 0; i < n; i++) {
+            candies[i] = 1;
+        }
+
+        // Pass through the ratings array from left to right and adjust candies as needed.
+        for (int i = 1; i < n; i++) {
+            if (ratings[i] > ratings[i - 1]) {
+                candies[i] = 1 + candies[i - 1];
+            }
+        }
+
+        // Pass through the ratings array from right to left to ensure the right neighbors also get appropriate candies.
+        for (int i = n - 2; i >= 0; i--) {
+            if (ratings[i] > ratings[i + 1] && candies[i] <= candies[i + 1]) {
+                candies[i] = 1 + candies[i + 1];
+            }
+        }
+
+        int totalCandies = 0; // Initialize a variable to store the total number of candies given.
+
+        // Sum up the candies for all children to get the total count.
+        for (int candyCount : candies) {
+            totalCandies += candyCount;
+        }
+
+        return totalCandies; // Return the total number of candies given to all children.
+    }
+}
