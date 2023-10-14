@@ -1,0 +1,22 @@
+class Solution {
+    public int paintWalls(int[] cost, int[] time) {
+        int n=cost.length;
+        return (int)solve(cost,time,0,0,n,new Long[n][501]);
+    }
+    
+    private long solve(int[] cost, int[] time, int index, int sum, int target, Long[][] dp) {
+        //Base
+        if(index == cost.length)
+            return sum >= target ? 0 : Integer.MAX_VALUE;
+        if(sum >= target)
+            return 0;
+        
+        if(dp[index][sum] != null)
+            return dp[index][sum];
+        
+        long taken=Integer.MAX_VALUE, not_taken=Integer.MAX_VALUE;
+        taken = cost[index] + solve(cost,time,index+1,sum+time[index]+1,target,dp);
+        not_taken = solve(cost,time,index+1,sum,target,dp);
+        return dp[index][sum] = Math.min(taken,not_taken);
+    }
+}
