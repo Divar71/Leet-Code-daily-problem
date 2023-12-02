@@ -1,0 +1,31 @@
+class Solution {
+    public int countCharacters(String[] words, String chars) {
+        int count = 0;
+        Map<Character, Integer> list = new HashMap<>();
+
+        for(int a = 0; a < chars.length(); a++){
+            char val = chars.charAt(a);
+
+            if(list.containsKey(val)) list.put(val, list.get(val)+1);
+            else list.put(val, 1);
+        }
+        for(String word: words){
+            Map<Character, Integer> temp = new HashMap<>();
+
+            for(int a = 0; a < word.length(); a++){
+                char val = word.charAt(a);
+
+                if(temp.containsKey(val)) temp.put(val, temp.get(val)+1);
+                else temp.put(val, 1);
+            }
+            boolean isTrue = true;
+            for(Map.Entry<Character, Integer> entry: temp.entrySet()){
+                char val = entry.getKey();
+                int  con = entry.getValue();
+                if(!list.containsKey(val) || list.get(val)<con) isTrue = false;
+            }
+            if(isTrue) count += word.length();
+        }
+        return count;
+    }
+}
